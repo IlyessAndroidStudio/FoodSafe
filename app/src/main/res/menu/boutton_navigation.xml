@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Historique"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:id="@+id/Historique"/>
+
+    <item
+        android:title="Scan"
+        android:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        android:id="@+id/Scan"/>
+
+    <item
+        android:title="Favoris"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:id="@+id/Favoris"/>
+
+</menu>

@@ -1,22 +1,29 @@
 package com.example.foodsafe;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.os.Bundle;
 
-import android.provider.MediaStore;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+
 import android.widget.Button;
+
+import com.example.foodsafe.databinding.ActivityMainBinding;
+import com.google.zxing.client.android.Intents;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    Button BtnCam;
+    ActivityMainBinding binding;
+
+    Button BtnScan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,23 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BtnCam = (Button) findViewById(R.id.BtnCam);
-        BtnCam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Intent intent = new Intent();
-                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivity(intent);
-                }catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
-
 
     }
-
-
 }
