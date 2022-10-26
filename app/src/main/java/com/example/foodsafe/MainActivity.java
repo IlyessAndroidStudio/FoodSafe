@@ -1,28 +1,31 @@
 package com.example.foodsafe;
 
-import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
-import android.content.ClipData;
-import android.content.Intent;
 import android.os.Bundle;
 
 
+import android.widget.TextView;
 
-import android.widget.Button;
-
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.budiyev.android.codescanner.DecodeCallback;
+import com.budiyev.android.codescanner.ScanMode;
 import com.example.foodsafe.databinding.ActivityMainBinding;
-import com.google.zxing.client.android.Intents;
+import com.google.zxing.Result;
 
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
+    private CodeScanner codeScanner;
+    private TextView codeData;
+    private CodeScannerView vueScanner;
 
 
     @Override
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HistoriqueFragment());
+        codeData = findViewById(R.id.text_code);
+        vueScanner = findViewById(R.id.Vue_scanner);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item ->{
 
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.Scan:
                     replaceFragment(new ScanFragment());
+                    runCodeScanner();
                     break;
             }
 
@@ -65,5 +71,28 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    private void runCodeScanner(){
+
+        codeScanner = new CodeScanner(this, vueScanner);
+
+        codeScanner.setAutoFocusEnabled(true);
+        codeScanner.setFormats(CodeScanner.ALL_FORMATS);
+        codeScanner.setScanMode(ScanMode.CONTINUOUS);
+
+        codeScanner.setDecodeCallback(new DecodeCallback() {
+            @Override
+            public void onDecoded(@NonNull Result result) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String data = result.getText();
+                        codeData.setText(data);
+                    }
+                });
+            }
+        });
+
+
+    }
 
 }
